@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI勝負レース研究所 | AI競輪・競艇・競馬予想 (実績全公開)</title><meta name="description" content="AIによる競輪・競艇・競馬の勝負レース予想。全予想と結果を毎日自動公開する透明性が特徴。">
+<title>🏇 競馬 AI予想 | AI勝負レース研究所</title><meta name="description" content="中央競馬のAI予想(準備中)。全予想と結果を毎日自動公開。">
 <style>
 *{box-sizing:border-box}
 :root{--bg:#070b14;--panel:rgba(22,30,48,.72);--line:rgba(122,160,255,.14);
@@ -60,27 +60,26 @@ footer{text-align:center;color:#44546f;font-size:.75em;padding:28px 0}
 padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:.2s;backdrop-filter:blur(8px)}
 .ad:hover{border-color:var(--blue);transform:translateY(-2px)}
 </style></head><body>
-<header><h1>🎯 AI勝負レース研究所</h1><p>AIが選ぶ勝負レース — 全予想・全結果を毎日自動公開</p></header>
+<header><h1>🏇 競馬 AI予想</h1><p>netkeibaデータ×機械学習 — 準備中</p></header>
 <div class="wrap"><nav><a href="index.html">トップ</a><a href="keirin.html">🚴 競輪</a><a href="boat.html">🚤 競艇</a><a href="keiba.html">🏇 競馬</a><a href="results.html">📊 実績</a></nav>
 <div class="stats">
-<div class="stat"><b>88%</b><span>★レース 軸3着内率<br>(実測 16R)</span></div>
-<div class="stat"><b>29%</b><span>○◎レース 3連単3点<br>(実測 7R)</span></div>
-<div class="stat"><b>52%</b><span>全レース 軸1着率<br>(実測 25R)</span></div>
+<div class="stat"><b>準備中</b><span>AIモデル学習中<br>(過去1年・約8,000レース)</span></div>
 </div>
-<p class="legend">◎=3連単3点ガチ勝負(的中目安40%+) ○=3点勝負(30%+) ★=軸勝負(軸1着50%+、ワイド/3連複向き)</p>
-<div class="sec">今日の予想を見る</div>
-<div class="adbox" style="grid-template-columns:1fr 1fr 1fr">
-<a class="ad" href="keirin.html" style="padding:22px"><b style="font-size:1.6em">🚴</b><br>
-<b>競輪 今日の予想</b><br><span class="legend">全45R / ◎0 ★18</span></a>
-<a class="ad" href="boat.html" style="padding:22px"><b style="font-size:1.6em">🚤</b><br>
-<b>競艇 今日の予想</b><br><span class="legend">全58R / ◎8 ★35</span></a>
-<a class="ad" href="keiba.html" style="padding:22px"><b style="font-size:1.6em">🏇</b><br>
-<b>競馬 AI予想</b><br><span class="legend">準備中</span></a>
-</div>
-
+<p class="legend">中央競馬のAI予想を準備しています。馬・騎手のローリング成績、馬場・距離適性、
+オッズ分析など60項目以上で学習中。公開まで今しばらくお待ちください。</p>
 <div class="sec">🏦 おすすめ (PR)</div><div class="adbox"><a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B3XB4+61B8KY+3XCC+BYT9D" rel="nofollow sponsored">💹 新NISAなら松井証券 — 手数料無料で始める</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B3XB4+4W8BUA+1WP2+15QHIA" rel="nofollow sponsored">📈 DMM株 — 1株から投資デビュー</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DYHVCI+1LP8+CBO81" rel="nofollow sponsored">💰 ハピタス — ポイ活で軍資金づくり(高還元)</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DZOQK2+3NOK+60H7L" rel="nofollow sponsored">🪙 ECナビ — アンケートでコツコツ貯める</a></div>
 <div class="note">本サイトの予想は統計モデルによる参考情報であり、的中を保証するものではありません。公営競技の投票は20歳以上・自己責任で。のめり込みに注意してください。<br>更新: 2026-06-11 17:01 (1日2回自動更新) / 予想生成・結果照合・ページ更新まで全て自動化。</div>
-</div><footer>© AI勝負レース研究所</footer></body></html>
+</div><footer>© AI勝負レース研究所</footer><script>
+function fil(mode,btn){
+ document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+ document.querySelectorAll('tr[data-mark]').forEach(tr=>{
+  const m=tr.dataset.mark;
+  tr.style.display=(mode==='all'||(mode==='hard'&&m==='hard')||(mode==='bet'&&(m==='hard'||m==='soft'))
+   ||(mode==='axis'&&tr.dataset.axis==='1'))?'':'none';});}
+(function(){const now=new Date();const cur=now.getHours()*60+now.getMinutes();
+ document.querySelectorAll('tr[data-dl]').forEach(tr=>{const[h,m]=tr.dataset.dl.split(':').map(Number);
+  if(h*60+m<cur-2)tr.classList.add('done');});})();
+</script></body></html>
