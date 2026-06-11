@@ -1,31 +1,63 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>実績 | AI勝負レース研究所</title><style>
-body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;margin:0;background:#0f1420;color:#e8ecf4}
-.wrap{max-width:860px;margin:0 auto;padding:16px}
-header{background:linear-gradient(135deg,#16213e,#0f3460);padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:1.5em}header p{margin:6px 0 0;color:#9fb3d9;font-size:.9em}
-nav{display:flex;gap:10px;justify-content:center;margin:14px 0}
-nav a{color:#7fc4ff;text-decoration:none;padding:6px 14px;border:1px solid #2a3b5e;border-radius:20px;font-size:.9em}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-.stat{flex:1;min-width:140px;background:#1a2436;border-radius:10px;padding:12px;text-align:center}
-.stat b{display:block;font-size:1.5em;color:#ffd76a}.stat span{font-size:.78em;color:#9fb3d9}
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88em}
-th{background:#1a2436;padding:8px 6px;color:#9fb3d9;font-weight:normal;font-size:.8em}
-td{padding:8px 6px;border-bottom:1px solid #1e2a40;text-align:center}
-.mark{font-size:1.05em}.hit{color:#6aff8f;font-weight:bold}.miss{color:#5a6b8c}
-.picks{font-family:monospace;letter-spacing:.5px}
-.sec{margin:24px 0 8px;font-size:1.1em;border-left:4px solid #ffd76a;padding-left:10px}
-.note{background:#1a2436;border-radius:10px;padding:12px;font-size:.8em;color:#9fb3d9;margin:18px 0;line-height:1.7}
-.cta{display:block;background:linear-gradient(135deg,#e94560,#c23152);color:#fff;text-align:center;
-padding:14px;border-radius:10px;text-decoration:none;font-weight:bold;margin:14px 0}
-footer{text-align:center;color:#5a6b8c;font-size:.75em;padding:24px 0}
-.legend{font-size:.8em;color:#9fb3d9;margin:8px 0}
-.adbox{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+*{box-sizing:border-box}
+:root{--bg:#070b14;--panel:rgba(22,30,48,.72);--line:rgba(122,160,255,.14);
+--tx:#e8eefc;--mut:#8fa3c8;--gold:#ffc94d;--blue:#5ab8ff;--red:#ff5d7a;--grn:#3ddc84}
+body{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;margin:0;background:var(--bg);color:var(--tx);
+background-image:radial-gradient(900px 420px at 80% -10%,rgba(64,120,255,.16),transparent),
+radial-gradient(700px 380px at 0% 0%,rgba(255,90,140,.10),transparent)}
+.wrap{max-width:920px;margin:0 auto;padding:16px}
+header{padding:34px 16px 22px;text-align:center}
+header h1{margin:0;font-size:1.8em;font-weight:900;letter-spacing:.04em;
+background:linear-gradient(90deg,#fff,#9cc4ff 55%,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:8px 0 0;color:var(--mut);font-size:.9em}
+nav{display:flex;gap:10px;justify-content:center;margin:18px 0 6px}
+nav a{color:var(--tx);text-decoration:none;padding:9px 20px;border:1px solid var(--line);
+border-radius:24px;font-size:.9em;background:var(--panel);backdrop-filter:blur(8px);transition:.2s}
+nav a:hover,nav a.on{border-color:var(--gold);color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media(max-width:620px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 12px;
+text-align:center;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.stat b{display:block;font-size:2.1em;font-weight:900;
+background:linear-gradient(180deg,#ffe9ad,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.78em;color:var(--mut);line-height:1.5}
+.filters{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.fbtn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--mut);
+padding:7px 16px;border-radius:20px;font-size:.83em;transition:.15s}
+.fbtn.on{color:#111;background:linear-gradient(135deg,#ffe9ad,#ffc94d);border-color:#ffc94d;font-weight:bold}
+table{width:100%;border-collapse:separate;border-spacing:0 6px;margin:6px 0 14px;font-size:.88em}
+th{padding:4px 6px;color:var(--mut);font-weight:normal;font-size:.74em;letter-spacing:.06em}
+td{padding:11px 6px;text-align:center;background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+tr td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
+tr td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
+tr.r-hard td{background:linear-gradient(90deg,rgba(255,201,77,.16),var(--panel) 45%);border-color:rgba(255,201,77,.45)}
+tr.r-soft td{border-color:rgba(90,184,255,.35)}
+tr.done td{opacity:.38}
+.badge{display:inline-block;min-width:34px;padding:3px 8px;border-radius:8px;font-size:.78em;font-weight:bold}
+.b-hard{background:linear-gradient(135deg,#ffe9ad,#ffb52e);color:#1a1200}
+.b-soft{background:rgba(90,184,255,.2);color:var(--blue);border:1px solid rgba(90,184,255,.5)}
+.b-axis{background:rgba(255,93,122,.16);color:var(--red);border:1px solid rgba(255,93,122,.45)}
+.b-none{color:#44546f}
+.picks{font-family:'SF Mono',Consolas,monospace;letter-spacing:.5px}
+.pct{font-weight:bold;color:var(--gold)}
+.hit{color:var(--grn);font-weight:bold}.miss{color:#5a6b8c}
+.sec{margin:30px 0 6px;font-size:1.15em;font-weight:800;display:flex;align-items:center;gap:8px}
+.sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;
+font-size:.78em;color:var(--mut);margin:20px 0;line-height:1.8}
+.cta{display:block;background:linear-gradient(135deg,#ff5d7a,#d63a64);color:#fff;text-align:center;
+padding:15px;border-radius:14px;text-decoration:none;font-weight:bold;margin:12px 0;
+box-shadow:0 8px 24px rgba(255,93,122,.25);transition:.2s}
+.cta:hover{transform:translateY(-2px)}
+footer{text-align:center;color:#44546f;font-size:.75em;padding:28px 0}
+.legend{font-size:.8em;color:var(--mut);margin:8px 0;line-height:1.7}
+.adbox{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.adbox{grid-template-columns:1fr}}
-.ad{display:block;background:#1a2436;border:1px solid #2a3b5e;color:#cfe0ff;text-align:center;
-padding:12px;border-radius:10px;text-decoration:none;font-size:.85em}
-.ad:hover{border-color:#7fc4ff}
+.ad{display:block;background:var(--panel);border:1px solid var(--line);color:#cfe0ff;text-align:center;
+padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:.2s;backdrop-filter:blur(8px)}
+.ad:hover{border-color:var(--blue);transform:translateY(-2px)}
 </style></head><body>
 <header><h1>📊 実績 — 全予想の答え合わせ</h1><p>機械的に毎日自動記録。良い日も悪い日も全部公開します</p></header>
 <div class="wrap">

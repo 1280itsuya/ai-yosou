@@ -3,31 +3,63 @@
 <title>AI勝負レース研究所 | AI競輪・競艇予想 (実績全公開)</title>
 <meta name="description" content="AIによる競輪・競艇の勝負レース予想。全予想と結果を毎日自動公開する透明性が特徴。◎=3連単3点ガチ勝負(実測56%)。">
 <style>
-body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;margin:0;background:#0f1420;color:#e8ecf4}
-.wrap{max-width:860px;margin:0 auto;padding:16px}
-header{background:linear-gradient(135deg,#16213e,#0f3460);padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:1.5em}header p{margin:6px 0 0;color:#9fb3d9;font-size:.9em}
-nav{display:flex;gap:10px;justify-content:center;margin:14px 0}
-nav a{color:#7fc4ff;text-decoration:none;padding:6px 14px;border:1px solid #2a3b5e;border-radius:20px;font-size:.9em}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-.stat{flex:1;min-width:140px;background:#1a2436;border-radius:10px;padding:12px;text-align:center}
-.stat b{display:block;font-size:1.5em;color:#ffd76a}.stat span{font-size:.78em;color:#9fb3d9}
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88em}
-th{background:#1a2436;padding:8px 6px;color:#9fb3d9;font-weight:normal;font-size:.8em}
-td{padding:8px 6px;border-bottom:1px solid #1e2a40;text-align:center}
-.mark{font-size:1.05em}.hit{color:#6aff8f;font-weight:bold}.miss{color:#5a6b8c}
-.picks{font-family:monospace;letter-spacing:.5px}
-.sec{margin:24px 0 8px;font-size:1.1em;border-left:4px solid #ffd76a;padding-left:10px}
-.note{background:#1a2436;border-radius:10px;padding:12px;font-size:.8em;color:#9fb3d9;margin:18px 0;line-height:1.7}
-.cta{display:block;background:linear-gradient(135deg,#e94560,#c23152);color:#fff;text-align:center;
-padding:14px;border-radius:10px;text-decoration:none;font-weight:bold;margin:14px 0}
-footer{text-align:center;color:#5a6b8c;font-size:.75em;padding:24px 0}
-.legend{font-size:.8em;color:#9fb3d9;margin:8px 0}
-.adbox{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+*{box-sizing:border-box}
+:root{--bg:#070b14;--panel:rgba(22,30,48,.72);--line:rgba(122,160,255,.14);
+--tx:#e8eefc;--mut:#8fa3c8;--gold:#ffc94d;--blue:#5ab8ff;--red:#ff5d7a;--grn:#3ddc84}
+body{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;margin:0;background:var(--bg);color:var(--tx);
+background-image:radial-gradient(900px 420px at 80% -10%,rgba(64,120,255,.16),transparent),
+radial-gradient(700px 380px at 0% 0%,rgba(255,90,140,.10),transparent)}
+.wrap{max-width:920px;margin:0 auto;padding:16px}
+header{padding:34px 16px 22px;text-align:center}
+header h1{margin:0;font-size:1.8em;font-weight:900;letter-spacing:.04em;
+background:linear-gradient(90deg,#fff,#9cc4ff 55%,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:8px 0 0;color:var(--mut);font-size:.9em}
+nav{display:flex;gap:10px;justify-content:center;margin:18px 0 6px}
+nav a{color:var(--tx);text-decoration:none;padding:9px 20px;border:1px solid var(--line);
+border-radius:24px;font-size:.9em;background:var(--panel);backdrop-filter:blur(8px);transition:.2s}
+nav a:hover,nav a.on{border-color:var(--gold);color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media(max-width:620px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 12px;
+text-align:center;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.stat b{display:block;font-size:2.1em;font-weight:900;
+background:linear-gradient(180deg,#ffe9ad,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.78em;color:var(--mut);line-height:1.5}
+.filters{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.fbtn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--mut);
+padding:7px 16px;border-radius:20px;font-size:.83em;transition:.15s}
+.fbtn.on{color:#111;background:linear-gradient(135deg,#ffe9ad,#ffc94d);border-color:#ffc94d;font-weight:bold}
+table{width:100%;border-collapse:separate;border-spacing:0 6px;margin:6px 0 14px;font-size:.88em}
+th{padding:4px 6px;color:var(--mut);font-weight:normal;font-size:.74em;letter-spacing:.06em}
+td{padding:11px 6px;text-align:center;background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+tr td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
+tr td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
+tr.r-hard td{background:linear-gradient(90deg,rgba(255,201,77,.16),var(--panel) 45%);border-color:rgba(255,201,77,.45)}
+tr.r-soft td{border-color:rgba(90,184,255,.35)}
+tr.done td{opacity:.38}
+.badge{display:inline-block;min-width:34px;padding:3px 8px;border-radius:8px;font-size:.78em;font-weight:bold}
+.b-hard{background:linear-gradient(135deg,#ffe9ad,#ffb52e);color:#1a1200}
+.b-soft{background:rgba(90,184,255,.2);color:var(--blue);border:1px solid rgba(90,184,255,.5)}
+.b-axis{background:rgba(255,93,122,.16);color:var(--red);border:1px solid rgba(255,93,122,.45)}
+.b-none{color:#44546f}
+.picks{font-family:'SF Mono',Consolas,monospace;letter-spacing:.5px}
+.pct{font-weight:bold;color:var(--gold)}
+.hit{color:var(--grn);font-weight:bold}.miss{color:#5a6b8c}
+.sec{margin:30px 0 6px;font-size:1.15em;font-weight:800;display:flex;align-items:center;gap:8px}
+.sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;
+font-size:.78em;color:var(--mut);margin:20px 0;line-height:1.8}
+.cta{display:block;background:linear-gradient(135deg,#ff5d7a,#d63a64);color:#fff;text-align:center;
+padding:15px;border-radius:14px;text-decoration:none;font-weight:bold;margin:12px 0;
+box-shadow:0 8px 24px rgba(255,93,122,.25);transition:.2s}
+.cta:hover{transform:translateY(-2px)}
+footer{text-align:center;color:#44546f;font-size:.75em;padding:28px 0}
+.legend{font-size:.8em;color:var(--mut);margin:8px 0;line-height:1.7}
+.adbox{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.adbox{grid-template-columns:1fr}}
-.ad{display:block;background:#1a2436;border:1px solid #2a3b5e;color:#cfe0ff;text-align:center;
-padding:12px;border-radius:10px;text-decoration:none;font-size:.85em}
-.ad:hover{border-color:#7fc4ff}
+.ad{display:block;background:var(--panel);border:1px solid var(--line);color:#cfe0ff;text-align:center;
+padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:.2s;backdrop-filter:blur(8px)}
+.ad:hover{border-color:var(--blue);transform:translateY(-2px)}
 </style></head><body>
 <header><h1>🎯 AI勝負レース研究所</h1><p>AIが選ぶ競輪・競艇の勝負レース — 全予想・全結果を毎日自動公開</p></header>
 <div class="wrap">
@@ -38,117 +70,133 @@ padding:12px;border-radius:10px;text-decoration:none;font-size:.85em}
 <div class="stat"><b>62%</b><span>競艇 軸1着率<br>(直近実測)</span></div>
 </div><p class="legend">※実運用実績は本日から毎日自動記録・公開します(検証値は時系列バックテスト)</p>
 <p class="legend">◎=3連単3点ガチ勝負(的中目安40%+) ○=3点勝負(30%+) ★=軸勝負(軸1着50%+、ワイド向き)</p>
+<div class="filters">
+<button class="fbtn on" onclick="fil('all',this)">すべて</button>
+<button class="fbtn" onclick="fil('hard',this)">◎勝負のみ</button>
+<button class="fbtn" onclick="fil('bet',this)">◎○(3点向き)</button>
+<button class="fbtn" onclick="fil('axis',this)">★軸(ワイド向き)</button>
+</div>
 <div class="sec">🚴 競輪 — 今日の予想 (06/11)</div>
 <table><tr><th>印</th><th>締切</th><th>レース</th><th>軸(1着率)</th><th>3連単3点</th><th>的中目安</th></tr>
-<tr><td class='mark'>★</td><td>15:27</td><td>前橋11R</td><td>3 (65%)</td><td class='picks'>3-5-4 / 3-5-2 / 3-5-7</td><td>18%</td></tr>
-<tr><td class='mark'>ー</td><td>15:35</td><td>岐阜12R</td><td>7 (27%)</td><td class='picks'>7-2-9 / 2-7-9 / 7-9-2</td><td>4%</td></tr>
-<tr><td class='mark'>★</td><td>15:40</td><td>玉野1R</td><td>5 (52%)</td><td class='picks'>5-4-1 / 5-1-4 / 5-4-3</td><td>21%</td></tr>
-<tr><td class='mark'>★○</td><td>15:50</td><td>京王閣1R</td><td>3 (61%)</td><td class='picks'>3-1-4 / 3-1-2 / 3-1-5</td><td>38%</td></tr>
-<tr><td class='mark'>ー</td><td>15:55</td><td>静岡11R</td><td>1 (38%)</td><td class='picks'>1-6-7 / 6-1-7 / 1-6-3</td><td>21%</td></tr>
-<tr><td class='mark'>★</td><td>16:03</td><td>玉野2R</td><td>3 (77%)</td><td class='picks'>3-4-6 / 3-4-1 / 3-6-4</td><td>28%</td></tr>
-<tr><td class='mark'>ー</td><td>16:10</td><td>前橋12R</td><td>6 (37%)</td><td class='picks'>6-1-5 / 1-5-6 / 6-1-4</td><td>9%</td></tr>
-<tr><td class='mark'>ー</td><td>16:17</td><td>京王閣2R</td><td>2 (36%)</td><td class='picks'>2-5-4 / 2-5-3 / 2-5-1</td><td>13%</td></tr>
-<tr><td class='mark'>★</td><td>16:27</td><td>玉野3R</td><td>6 (65%)</td><td class='picks'>6-4-3 / 6-3-4 / 6-4-1</td><td>24%</td></tr>
-<tr><td class='mark'>ー</td><td>16:41</td><td>京王閣3R</td><td>1 (40%)</td><td class='picks'>1-7-5 / 7-1-5 / 1-7-3</td><td>22%</td></tr>
-<tr><td class='mark'>ー</td><td>16:53</td><td>玉野4R</td><td>9 (46%)</td><td class='picks'>9-1-5 / 9-1-3 / 1-9-5</td><td>12%</td></tr>
-<tr><td class='mark'>★○</td><td>17:06</td><td>京王閣4R</td><td>3 (74%)</td><td class='picks'>3-6-2 / 3-6-4 / 3-6-1</td><td>35%</td></tr>
-<tr><td class='mark'>ー</td><td>17:19</td><td>玉野5R</td><td>3 (43%)</td><td class='picks'>3-7-2 / 3-7-6 / 3-7-5</td><td>9%</td></tr>
-<tr><td class='mark'>★</td><td>17:32</td><td>京王閣5R</td><td>4 (65%)</td><td class='picks'>4-3-5 / 4-3-1 / 4-5-3</td><td>21%</td></tr>
-<tr><td class='mark'>ー</td><td>17:45</td><td>玉野6R</td><td>5 (25%)</td><td class='picks'>2-1-5 / 1-5-2 / 1-2-5</td><td>5%</td></tr>
-<tr><td class='mark'>★</td><td>17:58</td><td>京王閣6R</td><td>7 (75%)</td><td class='picks'>7-1-5 / 7-1-4 / 7-1-2</td><td>25%</td></tr>
-<tr><td class='mark'>ー</td><td>18:11</td><td>玉野7R</td><td>7 (30%)</td><td class='picks'>7-3-2 / 7-3-1 / 7-3-5</td><td>6%</td></tr>
-<tr><td class='mark'>ー</td><td>18:24</td><td>京王閣7R</td><td>4 (37%)</td><td class='picks'>4-2-5 / 4-2-7 / 4-7-2</td><td>13%</td></tr>
-<tr><td class='mark'>ー</td><td>18:37</td><td>玉野8R</td><td>5 (39%)</td><td class='picks'>5-3-9 / 5-9-3 / 5-3-2</td><td>7%</td></tr>
-<tr><td class='mark'>ー</td><td>18:50</td><td>京王閣8R</td><td>3 (21%)</td><td class='picks'>2-5-7 / 5-7-1 / 2-5-1</td><td>4%</td></tr>
-<tr><td class='mark'>ー</td><td>19:03</td><td>玉野9R</td><td>7 (49%)</td><td class='picks'>7-2-5 / 7-2-9 / 7-2-1</td><td>15%</td></tr>
-<tr><td class='mark'>ー</td><td>19:16</td><td>京王閣9R</td><td>1 (36%)</td><td class='picks'>7-1-4 / 1-7-4 / 7-1-5</td><td>12%</td></tr>
-<tr><td class='mark'>ー</td><td>19:30</td><td>玉野10R</td><td>5 (43%)</td><td class='picks'>5-3-7 / 5-3-9 / 5-9-3</td><td>11%</td></tr>
-<tr><td class='mark'>ー</td><td>19:43</td><td>京王閣10R</td><td>7 (42%)</td><td class='picks'>7-2-1 / 7-2-3 / 7-2-5</td><td>14%</td></tr>
-<tr><td class='mark'>ー</td><td>19:57</td><td>玉野11R</td><td>9 (41%)</td><td class='picks'>9-5-1 / 5-9-1 / 9-5-2</td><td>16%</td></tr>
-<tr><td class='mark'>★</td><td>20:10</td><td>京王閣11R</td><td>5 (73%)</td><td class='picks'>5-1-7 / 5-1-4 / 5-1-3</td><td>29%</td></tr>
-<tr><td class='mark'>ー</td><td>20:25</td><td>玉野12R</td><td>1 (18%)</td><td class='picks'>4-3-2 / 4-3-7 / 4-3-9</td><td>3%</td></tr>
-<tr><td class='mark'>ー</td><td>20:35</td><td>別府1R</td><td>1 (42%)</td><td class='picks'>1-3-2 / 1-3-4 / 1-3-7</td><td>8%</td></tr>
-<tr><td class='mark'>○</td><td>20:45</td><td>宇都宮1R</td><td>1 (37%)</td><td class='picks'>2-1-3 / 1-2-3 / 1-3-2</td><td>33%</td></tr>
-<tr><td class='mark'>ー</td><td>20:55</td><td>別府2R</td><td>1 (48%)</td><td class='picks'>1-4-3 / 1-4-2 / 1-3-4</td><td>11%</td></tr>
-<tr><td class='mark'>ー</td><td>21:05</td><td>宇都宮2R</td><td>3 (33%)</td><td class='picks'>1-3-4 / 3-1-4 / 3-4-1</td><td>13%</td></tr>
-<tr><td class='mark'>ー</td><td>21:15</td><td>別府3R</td><td>2 (43%)</td><td class='picks'>2-1-5 / 1-2-5 / 2-1-3</td><td>21%</td></tr>
-<tr><td class='mark'>ー</td><td>21:25</td><td>宇都宮3R</td><td>4 (25%)</td><td class='picks'>4-2-3 / 1-2-3 / 2-3-1</td><td>4%</td></tr>
-<tr><td class='mark'>★</td><td>21:35</td><td>別府4R</td><td>1 (54%)</td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td>23%</td></tr>
-<tr><td class='mark'>ー</td><td>21:45</td><td>宇都宮4R</td><td>1 (30%)</td><td class='picks'>5-1-2 / 1-5-2 / 1-2-5</td><td>13%</td></tr>
-<tr><td class='mark'>★</td><td>21:55</td><td>別府5R</td><td>1 (51%)</td><td class='picks'>1-4-7 / 1-4-3 / 1-3-7</td><td>10%</td></tr>
-<tr><td class='mark'>★</td><td>22:05</td><td>宇都宮5R</td><td>2 (63%)</td><td class='picks'>2-5-6 / 2-5-1 / 2-1-5</td><td>17%</td></tr>
-<tr><td class='mark'>★</td><td>22:15</td><td>別府6R</td><td>1 (57%)</td><td class='picks'>1-2-3 / 1-4-3 / 1-2-4</td><td>17%</td></tr>
-<tr><td class='mark'>ー</td><td>22:25</td><td>宇都宮6R</td><td>1 (25%)</td><td class='picks'>1-3-2 / 3-1-2 / 1-3-6</td><td>6%</td></tr>
-<tr><td class='mark'>★</td><td>22:35</td><td>別府7R</td><td>1 (52%)</td><td class='picks'>1-5-4 / 1-4-5 / 1-4-6</td><td>13%</td></tr>
-<tr><td class='mark'>ー</td><td>22:45</td><td>宇都宮7R</td><td>1 (29%)</td><td class='picks'>2-1-4 / 1-2-4 / 1-4-2</td><td>11%</td></tr>
-<tr><td class='mark'>★</td><td>22:55</td><td>別府8R</td><td>1 (51%)</td><td class='picks'>1-2-7 / 1-2-3 / 1-7-2</td><td>12%</td></tr>
-<tr><td class='mark'>★</td><td>23:05</td><td>宇都宮8R</td><td>1 (56%)</td><td class='picks'>1-3-4 / 1-3-2 / 1-2-3</td><td>21%</td></tr>
-<tr><td class='mark'>★</td><td>23:15</td><td>別府9R</td><td>2 (51%)</td><td class='picks'>2-3-6 / 2-1-3 / 2-3-1</td><td>12%</td></tr>
-<tr><td class='mark'>★</td><td>23:25</td><td>宇都宮9R</td><td>2 (50%)</td><td class='picks'>2-7-1 / 7-2-1 / 2-1-7</td><td>23%</td></tr></table>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:27'><td><span class="badge b-axis">★軸</span></td><td>15:27</td><td><b>前橋11R</b></td><td>3 <span class='pct'>65%</span></td><td class='picks'>3-5-4 / 3-5-2 / 3-5-7</td><td class='pct'>18%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:35'><td><span class="badge b-none">ー</span></td><td>15:35</td><td><b>岐阜12R</b></td><td>7 <span class='pct'>27%</span></td><td class='picks'>7-2-9 / 2-7-9 / 7-9-2</td><td class='pct'>4%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:40'><td><span class="badge b-axis">★軸</span></td><td>15:40</td><td><b>玉野1R</b></td><td>5 <span class='pct'>52%</span></td><td class='picks'>5-4-1 / 5-1-4 / 5-4-3</td><td class='pct'>21%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='15:50'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>15:50</td><td><b>京王閣1R</b></td><td>3 <span class='pct'>61%</span></td><td class='picks'>3-1-4 / 3-1-2 / 3-1-5</td><td class='pct'>38%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:55'><td><span class="badge b-none">ー</span></td><td>15:55</td><td><b>静岡11R</b></td><td>1 <span class='pct'>38%</span></td><td class='picks'>1-6-7 / 6-1-7 / 1-6-3</td><td class='pct'>21%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:03'><td><span class="badge b-axis">★軸</span></td><td>16:03</td><td><b>玉野2R</b></td><td>3 <span class='pct'>77%</span></td><td class='picks'>3-4-6 / 3-4-1 / 3-6-4</td><td class='pct'>28%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:10'><td><span class="badge b-none">ー</span></td><td>16:10</td><td><b>前橋12R</b></td><td>6 <span class='pct'>37%</span></td><td class='picks'>6-1-5 / 1-5-6 / 6-1-4</td><td class='pct'>9%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:17'><td><span class="badge b-none">ー</span></td><td>16:17</td><td><b>京王閣2R</b></td><td>2 <span class='pct'>36%</span></td><td class='picks'>2-5-4 / 2-5-3 / 2-5-1</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:27'><td><span class="badge b-axis">★軸</span></td><td>16:27</td><td><b>玉野3R</b></td><td>6 <span class='pct'>65%</span></td><td class='picks'>6-4-3 / 6-3-4 / 6-4-1</td><td class='pct'>24%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:41'><td><span class="badge b-none">ー</span></td><td>16:41</td><td><b>京王閣3R</b></td><td>1 <span class='pct'>40%</span></td><td class='picks'>1-7-5 / 7-1-5 / 1-7-3</td><td class='pct'>22%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:53'><td><span class="badge b-none">ー</span></td><td>16:53</td><td><b>玉野4R</b></td><td>9 <span class='pct'>46%</span></td><td class='picks'>9-1-5 / 9-1-3 / 1-9-5</td><td class='pct'>12%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='17:06'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>17:06</td><td><b>京王閣4R</b></td><td>3 <span class='pct'>74%</span></td><td class='picks'>3-6-2 / 3-6-4 / 3-6-1</td><td class='pct'>35%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='17:19'><td><span class="badge b-none">ー</span></td><td>17:19</td><td><b>玉野5R</b></td><td>3 <span class='pct'>43%</span></td><td class='picks'>3-7-2 / 3-7-6 / 3-7-5</td><td class='pct'>9%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='17:32'><td><span class="badge b-axis">★軸</span></td><td>17:32</td><td><b>京王閣5R</b></td><td>4 <span class='pct'>65%</span></td><td class='picks'>4-3-5 / 4-3-1 / 4-5-3</td><td class='pct'>21%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='17:45'><td><span class="badge b-none">ー</span></td><td>17:45</td><td><b>玉野6R</b></td><td>5 <span class='pct'>25%</span></td><td class='picks'>2-1-5 / 1-5-2 / 1-2-5</td><td class='pct'>5%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='17:58'><td><span class="badge b-axis">★軸</span></td><td>17:58</td><td><b>京王閣6R</b></td><td>7 <span class='pct'>75%</span></td><td class='picks'>7-1-5 / 7-1-4 / 7-1-2</td><td class='pct'>25%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:11'><td><span class="badge b-none">ー</span></td><td>18:11</td><td><b>玉野7R</b></td><td>7 <span class='pct'>30%</span></td><td class='picks'>7-3-2 / 7-3-1 / 7-3-5</td><td class='pct'>6%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:24'><td><span class="badge b-none">ー</span></td><td>18:24</td><td><b>京王閣7R</b></td><td>4 <span class='pct'>37%</span></td><td class='picks'>4-2-5 / 4-2-7 / 4-7-2</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:37'><td><span class="badge b-none">ー</span></td><td>18:37</td><td><b>玉野8R</b></td><td>5 <span class='pct'>39%</span></td><td class='picks'>5-3-9 / 5-9-3 / 5-3-2</td><td class='pct'>7%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:50'><td><span class="badge b-none">ー</span></td><td>18:50</td><td><b>京王閣8R</b></td><td>3 <span class='pct'>21%</span></td><td class='picks'>2-5-7 / 5-7-1 / 2-5-1</td><td class='pct'>4%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:03'><td><span class="badge b-none">ー</span></td><td>19:03</td><td><b>玉野9R</b></td><td>7 <span class='pct'>49%</span></td><td class='picks'>7-2-5 / 7-2-9 / 7-2-1</td><td class='pct'>15%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:16'><td><span class="badge b-none">ー</span></td><td>19:16</td><td><b>京王閣9R</b></td><td>1 <span class='pct'>36%</span></td><td class='picks'>7-1-4 / 1-7-4 / 7-1-5</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:30'><td><span class="badge b-none">ー</span></td><td>19:30</td><td><b>玉野10R</b></td><td>5 <span class='pct'>43%</span></td><td class='picks'>5-3-7 / 5-3-9 / 5-9-3</td><td class='pct'>11%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:43'><td><span class="badge b-none">ー</span></td><td>19:43</td><td><b>京王閣10R</b></td><td>7 <span class='pct'>42%</span></td><td class='picks'>7-2-1 / 7-2-3 / 7-2-5</td><td class='pct'>14%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:57'><td><span class="badge b-none">ー</span></td><td>19:57</td><td><b>玉野11R</b></td><td>9 <span class='pct'>41%</span></td><td class='picks'>9-5-1 / 5-9-1 / 9-5-2</td><td class='pct'>16%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='20:10'><td><span class="badge b-axis">★軸</span></td><td>20:10</td><td><b>京王閣11R</b></td><td>5 <span class='pct'>73%</span></td><td class='picks'>5-1-7 / 5-1-4 / 5-1-3</td><td class='pct'>29%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='20:25'><td><span class="badge b-none">ー</span></td><td>20:25</td><td><b>玉野12R</b></td><td>1 <span class='pct'>18%</span></td><td class='picks'>4-3-2 / 4-3-7 / 4-3-9</td><td class='pct'>3%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='20:35'><td><span class="badge b-none">ー</span></td><td>20:35</td><td><b>別府1R</b></td><td>1 <span class='pct'>42%</span></td><td class='picks'>1-3-2 / 1-3-4 / 1-3-7</td><td class='pct'>8%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='0' data-dl='20:45'><td><span class="badge b-soft">○3点</span></td><td>20:45</td><td><b>宇都宮1R</b></td><td>1 <span class='pct'>37%</span></td><td class='picks'>2-1-3 / 1-2-3 / 1-3-2</td><td class='pct'>33%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='20:55'><td><span class="badge b-none">ー</span></td><td>20:55</td><td><b>別府2R</b></td><td>1 <span class='pct'>48%</span></td><td class='picks'>1-4-3 / 1-4-2 / 1-3-4</td><td class='pct'>11%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='21:05'><td><span class="badge b-none">ー</span></td><td>21:05</td><td><b>宇都宮2R</b></td><td>3 <span class='pct'>33%</span></td><td class='picks'>1-3-4 / 3-1-4 / 3-4-1</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='21:15'><td><span class="badge b-none">ー</span></td><td>21:15</td><td><b>別府3R</b></td><td>2 <span class='pct'>43%</span></td><td class='picks'>2-1-5 / 1-2-5 / 2-1-3</td><td class='pct'>21%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='21:25'><td><span class="badge b-none">ー</span></td><td>21:25</td><td><b>宇都宮3R</b></td><td>4 <span class='pct'>25%</span></td><td class='picks'>4-2-3 / 1-2-3 / 2-3-1</td><td class='pct'>4%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='21:35'><td><span class="badge b-axis">★軸</span></td><td>21:35</td><td><b>別府4R</b></td><td>1 <span class='pct'>54%</span></td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td class='pct'>23%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='21:45'><td><span class="badge b-none">ー</span></td><td>21:45</td><td><b>宇都宮4R</b></td><td>1 <span class='pct'>30%</span></td><td class='picks'>5-1-2 / 1-5-2 / 1-2-5</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='21:55'><td><span class="badge b-axis">★軸</span></td><td>21:55</td><td><b>別府5R</b></td><td>1 <span class='pct'>51%</span></td><td class='picks'>1-4-7 / 1-4-3 / 1-3-7</td><td class='pct'>10%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='22:05'><td><span class="badge b-axis">★軸</span></td><td>22:05</td><td><b>宇都宮5R</b></td><td>2 <span class='pct'>63%</span></td><td class='picks'>2-5-6 / 2-5-1 / 2-1-5</td><td class='pct'>17%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='22:15'><td><span class="badge b-axis">★軸</span></td><td>22:15</td><td><b>別府6R</b></td><td>1 <span class='pct'>57%</span></td><td class='picks'>1-2-3 / 1-4-3 / 1-2-4</td><td class='pct'>17%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='22:25'><td><span class="badge b-none">ー</span></td><td>22:25</td><td><b>宇都宮6R</b></td><td>1 <span class='pct'>25%</span></td><td class='picks'>1-3-2 / 3-1-2 / 1-3-6</td><td class='pct'>6%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='22:35'><td><span class="badge b-axis">★軸</span></td><td>22:35</td><td><b>別府7R</b></td><td>1 <span class='pct'>52%</span></td><td class='picks'>1-5-4 / 1-4-5 / 1-4-6</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='22:45'><td><span class="badge b-none">ー</span></td><td>22:45</td><td><b>宇都宮7R</b></td><td>1 <span class='pct'>29%</span></td><td class='picks'>2-1-4 / 1-2-4 / 1-4-2</td><td class='pct'>11%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='22:55'><td><span class="badge b-axis">★軸</span></td><td>22:55</td><td><b>別府8R</b></td><td>1 <span class='pct'>51%</span></td><td class='picks'>1-2-7 / 1-2-3 / 1-7-2</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='23:05'><td><span class="badge b-axis">★軸</span></td><td>23:05</td><td><b>宇都宮8R</b></td><td>1 <span class='pct'>56%</span></td><td class='picks'>1-3-4 / 1-3-2 / 1-2-3</td><td class='pct'>21%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='23:15'><td><span class="badge b-axis">★軸</span></td><td>23:15</td><td><b>別府9R</b></td><td>2 <span class='pct'>51%</span></td><td class='picks'>2-3-6 / 2-1-3 / 2-3-1</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='23:25'><td><span class="badge b-axis">★軸</span></td><td>23:25</td><td><b>宇都宮9R</b></td><td>2 <span class='pct'>50%</span></td><td class='picks'>2-7-1 / 7-2-1 / 2-1-7</td><td class='pct'>23%</td></tr></table>
 
 <div class="sec">🚤 競艇 — 今日の予想</div>
 <table><tr><th>印</th><th>締切</th><th>レース</th><th>軸(1着率)</th><th>3連単3点</th><th>的中目安</th></tr>
-<tr><td class='mark'>★</td><td>14:52</td><td>江戸川9R</td><td>1 (62%)</td><td class='picks'>1-2-5 / 1-6-2 / 1-2-6</td><td>23%</td></tr>
-<tr><td class='mark'>★◎</td><td>15:00</td><td>児島9R</td><td>1 (78%)</td><td class='picks'>1-2-3 / 1-3-2 / 3-1-2</td><td>61%</td></tr>
-<tr><td class='mark'>ー</td><td>15:07</td><td>多摩川8R</td><td>1 (33%)</td><td class='picks'>1-6-4 / 1-4-6 / 1-6-2</td><td>12%</td></tr>
-<tr><td class='mark'>★</td><td>15:11</td><td>びわこ10R</td><td>1 (53%)</td><td class='picks'>1-5-2 / 1-2-5 / 1-2-4</td><td>20%</td></tr>
-<tr><td class='mark'>★◎</td><td>15:13</td><td>津10R</td><td>1 (76%)</td><td class='picks'>1-2-4 / 1-2-5 / 1-2-3</td><td>57%</td></tr>
-<tr><td class='mark'>★◎</td><td>15:20</td><td>尼崎10R</td><td>1 (66%)</td><td class='picks'>1-4-2 / 1-2-4 / 4-1-2</td><td>43%</td></tr>
-<tr><td class='mark'>★</td><td>15:22</td><td>江戸川10R</td><td>1 (53%)</td><td class='picks'>1-5-2 / 1-2-5 / 1-5-6</td><td>24%</td></tr>
-<tr><td class='mark'>ー</td><td>15:25</td><td>若松1R</td><td>1 (36%)</td><td class='picks'>1-2-4 / 1-4-2 / 3-1-2</td><td>8%</td></tr>
-<tr><td class='mark'>ー</td><td>15:27</td><td>蒲郡1R</td><td>3 (36%)</td><td class='picks'>3-1-4 / 3-1-5 / 3-1-6</td><td>13%</td></tr>
-<tr><td class='mark'>★</td><td>15:30</td><td>丸亀1R</td><td>1 (66%)</td><td class='picks'>1-3-4 / 1-3-5 / 1-5-4</td><td>29%</td></tr>
-<tr><td class='mark'>ー</td><td>15:37</td><td>児島10R</td><td>1 (42%)</td><td class='picks'>1-2-5 / 1-2-3 / 1-2-4</td><td>16%</td></tr>
-<tr><td class='mark'>★</td><td>15:39</td><td>多摩川9R</td><td>1 (54%)</td><td class='picks'>1-3-2 / 1-3-6 / 1-3-5</td><td>28%</td></tr>
-<tr><td class='mark'>★○</td><td>15:44</td><td>びわこ11R</td><td>1 (57%)</td><td class='picks'>1-2-5 / 1-2-3 / 1-2-6</td><td>34%</td></tr>
-<tr><td class='mark'>★○</td><td>15:47</td><td>津11R</td><td>1 (82%)</td><td class='picks'>1-2-6 / 1-2-4 / 1-2-3</td><td>36%</td></tr>
-<tr><td class='mark'>★</td><td>15:53</td><td>江戸川11R</td><td>1 (58%)</td><td class='picks'>1-5-4 / 1-5-3 / 1-5-2</td><td>25%</td></tr>
-<tr><td class='mark'>★◎</td><td>15:57</td><td>尼崎11R</td><td>1 (74%)</td><td class='picks'>1-4-2 / 1-4-3 / 1-4-6</td><td>43%</td></tr>
-<tr><td class='mark'>ー</td><td>16:04</td><td>丸亀2R</td><td>1 (42%)</td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td>17%</td></tr>
-<tr><td class='mark'>ー</td><td>16:06</td><td>蒲郡2R</td><td>2 (43%)</td><td class='picks'>2-1-3 / 2-1-4 / 2-3-1</td><td>22%</td></tr>
-<tr><td class='mark'>ー</td><td>16:07</td><td>若松2R</td><td>6 (32%)</td><td class='picks'>6-3-1 / 6-3-5 / 3-6-1</td><td>14%</td></tr>
-<tr><td class='mark'>★</td><td>16:13</td><td>児島11R</td><td>1 (53%)</td><td class='picks'>1-2-3 / 1-2-5 / 1-3-2</td><td>22%</td></tr>
-<tr><td class='mark'>★</td><td>16:15</td><td>多摩川10R</td><td>1 (58%)</td><td class='picks'>1-5-4 / 1-5-3 / 1-5-2</td><td>25%</td></tr>
-<tr><td class='mark'>★</td><td>16:20</td><td>びわこ12R</td><td>1 (55%)</td><td class='picks'>1-3-2 / 1-3-5 / 1-3-4</td><td>29%</td></tr>
-<tr><td class='mark'>ー</td><td>16:25</td><td>江戸川12R</td><td>1 (44%)</td><td class='picks'>1-4-2 / 1-4-3 / 1-4-5</td><td>17%</td></tr>
-<tr><td class='mark'>★◎</td><td>16:25</td><td>津12R</td><td>1 (77%)</td><td class='picks'>1-3-2 / 1-2-3 / 1-3-4</td><td>47%</td></tr>
-<tr><td class='mark'>ー</td><td>16:28</td><td>丸亀3R</td><td>1 (42%)</td><td class='picks'>1-3-4 / 1-4-3 / 1-3-2</td><td>25%</td></tr>
-<tr><td class='mark'>★○</td><td>16:35</td><td>尼崎12R</td><td>1 (62%)</td><td class='picks'>1-3-2 / 1-2-3 / 3-1-2</td><td>36%</td></tr>
-<tr><td class='mark'>ー</td><td>16:39</td><td>若松3R</td><td>2 (38%)</td><td class='picks'>2-1-3 / 2-5-1 / 2-1-6</td><td>11%</td></tr>
-<tr><td class='mark'>ー</td><td>16:41</td><td>蒲郡3R</td><td>2 (38%)</td><td class='picks'>2-3-4 / 2-3-1 / 2-1-4</td><td>14%</td></tr>
-<tr><td class='mark'>★</td><td>16:47</td><td>児島12R</td><td>1 (66%)</td><td class='picks'>1-3-4 / 1-3-6 / 1-3-2</td><td>23%</td></tr>
-<tr><td class='mark'>★</td><td>16:49</td><td>多摩川11R</td><td>1 (62%)</td><td class='picks'>1-2-4 / 1-2-3 / 1-3-2</td><td>24%</td></tr>
-<tr><td class='mark'>★○</td><td>17:00</td><td>丸亀4R</td><td>1 (57%)</td><td class='picks'>1-2-5 / 1-2-3 / 1-3-5</td><td>34%</td></tr>
-<tr><td class='mark'>ー</td><td>17:09</td><td>若松4R</td><td>3 (27%)</td><td class='picks'>3-2-5 / 3-2-6 / 3-2-1</td><td>9%</td></tr>
-<tr><td class='mark'>ー</td><td>17:17</td><td>蒲郡4R</td><td>1 (39%)</td><td class='picks'>1-3-4 / 1-4-5 / 1-4-2</td><td>12%</td></tr>
-<tr><td class='mark'>★</td><td>17:20</td><td>多摩川12R</td><td>1 (55%)</td><td class='picks'>1-4-2 / 1-4-6 / 1-4-3</td><td>27%</td></tr>
-<tr><td class='mark'>★◎</td><td>17:25</td><td>丸亀5R</td><td>1 (76%)</td><td class='picks'>1-5-3 / 1-3-5 / 1-5-6</td><td>46%</td></tr>
-<tr><td class='mark'>★○</td><td>17:34</td><td>若松5R</td><td>1 (66%)</td><td class='picks'>1-2-4 / 1-2-3 / 1-2-5</td><td>36%</td></tr>
-<tr><td class='mark'>★○</td><td>17:42</td><td>蒲郡5R</td><td>3 (53%)</td><td class='picks'>3-4-1 / 3-1-4 / 3-4-2</td><td>30%</td></tr>
-<tr><td class='mark'>★○</td><td>17:50</td><td>丸亀6R</td><td>1 (70%)</td><td class='picks'>1-2-3 / 1-2-6 / 1-2-4</td><td>35%</td></tr>
-<tr><td class='mark'>ー</td><td>17:59</td><td>若松6R</td><td>1 (26%)</td><td class='picks'>1-2-4 / 4-2-1 / 4-1-2</td><td>14%</td></tr>
-<tr><td class='mark'>ー</td><td>18:07</td><td>蒲郡6R</td><td>2 (46%)</td><td class='picks'>2-1-3 / 2-1-5 / 2-5-3</td><td>21%</td></tr>
-<tr><td class='mark'>★</td><td>18:15</td><td>丸亀7R</td><td>1 (60%)</td><td class='picks'>1-5-2 / 1-5-4 / 1-5-6</td><td>19%</td></tr>
-<tr><td class='mark'>ー</td><td>18:24</td><td>若松7R</td><td>1 (39%)</td><td class='picks'>1-2-5 / 1-2-4 / 1-5-2</td><td>11%</td></tr>
-<tr><td class='mark'>★◎</td><td>18:32</td><td>蒲郡7R</td><td>1 (68%)</td><td class='picks'>1-3-4 / 1-3-2 / 1-4-3</td><td>43%</td></tr>
-<tr><td class='mark'>★◎</td><td>18:40</td><td>丸亀8R</td><td>1 (79%)</td><td class='picks'>1-2-3 / 1-2-4 / 1-4-2</td><td>42%</td></tr>
-<tr><td class='mark'>ー</td><td>18:49</td><td>若松8R</td><td>1 (43%)</td><td class='picks'>1-2-3 / 1-2-5 / 1-2-6</td><td>13%</td></tr>
-<tr><td class='mark'>ー</td><td>18:57</td><td>蒲郡8R</td><td>2 (37%)</td><td class='picks'>2-1-3 / 2-1-4 / 2-1-5</td><td>12%</td></tr>
-<tr><td class='mark'>ー</td><td>19:06</td><td>丸亀9R</td><td>1 (38%)</td><td class='picks'>1-3-6 / 1-3-2 / 6-1-3</td><td>17%</td></tr>
-<tr><td class='mark'>ー</td><td>19:15</td><td>若松9R</td><td>1 (37%)</td><td class='picks'>2-1-5 / 1-2-5 / 2-1-4</td><td>22%</td></tr>
-<tr><td class='mark'>ー</td><td>19:23</td><td>蒲郡9R</td><td>2 (44%)</td><td class='picks'>2-1-3 / 2-1-4 / 1-2-3</td><td>25%</td></tr>
-<tr><td class='mark'>★</td><td>19:33</td><td>丸亀10R</td><td>1 (54%)</td><td class='picks'>1-2-3 / 1-2-4 / 1-2-6</td><td>28%</td></tr>
-<tr><td class='mark'>ー</td><td>19:42</td><td>若松10R</td><td>1 (43%)</td><td class='picks'>1-3-6 / 1-2-3 / 1-2-6</td><td>12%</td></tr>
-<tr><td class='mark'>★○</td><td>19:50</td><td>蒲郡10R</td><td>1 (73%)</td><td class='picks'>1-3-2 / 1-3-4 / 1-2-3</td><td>31%</td></tr>
-<tr><td class='mark'>★○</td><td>20:00</td><td>丸亀11R</td><td>1 (62%)</td><td class='picks'>1-2-3 / 1-2-5 / 1-2-4</td><td>34%</td></tr>
-<tr><td class='mark'>★</td><td>20:09</td><td>若松11R</td><td>1 (60%)</td><td class='picks'>1-2-4 / 1-4-2 / 1-2-6</td><td>15%</td></tr>
-<tr><td class='mark'>★○</td><td>20:17</td><td>蒲郡11R</td><td>1 (65%)</td><td class='picks'>1-5-3 / 1-5-4 / 1-5-2</td><td>34%</td></tr>
-<tr><td class='mark'>★○</td><td>20:30</td><td>丸亀12R</td><td>1 (80%)</td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td>39%</td></tr>
-<tr><td class='mark'>ー</td><td>20:38</td><td>若松12R</td><td>1 (42%)</td><td class='picks'>1-4-2 / 1-2-4 / 1-4-3</td><td>16%</td></tr>
-<tr><td class='mark'>★○</td><td>20:45</td><td>蒲郡12R</td><td>1 (71%)</td><td class='picks'>1-3-2 / 1-3-6 / 1-3-5</td><td>37%</td></tr></table>
+<tr class='' data-mark='none' data-axis='1' data-dl='14:52'><td><span class="badge b-axis">★軸</span></td><td>14:52</td><td><b>江戸川9R</b></td><td>1 <span class='pct'>62%</span></td><td class='picks'>1-2-5 / 1-6-2 / 1-2-6</td><td class='pct'>23%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='15:00'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>15:00</td><td><b>児島9R</b></td><td>1 <span class='pct'>78%</span></td><td class='picks'>1-2-3 / 1-3-2 / 3-1-2</td><td class='pct'>61%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:07'><td><span class="badge b-none">ー</span></td><td>15:07</td><td><b>多摩川8R</b></td><td>1 <span class='pct'>33%</span></td><td class='picks'>1-6-4 / 1-4-6 / 1-6-2</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:11'><td><span class="badge b-axis">★軸</span></td><td>15:11</td><td><b>びわこ10R</b></td><td>1 <span class='pct'>53%</span></td><td class='picks'>1-5-2 / 1-2-5 / 1-2-4</td><td class='pct'>20%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='15:13'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>15:13</td><td><b>津10R</b></td><td>1 <span class='pct'>76%</span></td><td class='picks'>1-2-4 / 1-2-5 / 1-2-3</td><td class='pct'>57%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='15:20'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>15:20</td><td><b>尼崎10R</b></td><td>1 <span class='pct'>66%</span></td><td class='picks'>1-4-2 / 1-2-4 / 4-1-2</td><td class='pct'>43%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:22'><td><span class="badge b-axis">★軸</span></td><td>15:22</td><td><b>江戸川10R</b></td><td>1 <span class='pct'>53%</span></td><td class='picks'>1-5-2 / 1-2-5 / 1-5-6</td><td class='pct'>24%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:25'><td><span class="badge b-none">ー</span></td><td>15:25</td><td><b>若松1R</b></td><td>1 <span class='pct'>36%</span></td><td class='picks'>1-2-4 / 1-4-2 / 3-1-2</td><td class='pct'>8%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:27'><td><span class="badge b-none">ー</span></td><td>15:27</td><td><b>蒲郡1R</b></td><td>3 <span class='pct'>36%</span></td><td class='picks'>3-1-4 / 3-1-5 / 3-1-6</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:30'><td><span class="badge b-axis">★軸</span></td><td>15:30</td><td><b>丸亀1R</b></td><td>1 <span class='pct'>66%</span></td><td class='picks'>1-3-4 / 1-3-5 / 1-5-4</td><td class='pct'>29%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='15:37'><td><span class="badge b-none">ー</span></td><td>15:37</td><td><b>児島10R</b></td><td>1 <span class='pct'>42%</span></td><td class='picks'>1-2-5 / 1-2-3 / 1-2-4</td><td class='pct'>16%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:39'><td><span class="badge b-axis">★軸</span></td><td>15:39</td><td><b>多摩川9R</b></td><td>1 <span class='pct'>54%</span></td><td class='picks'>1-3-2 / 1-3-6 / 1-3-5</td><td class='pct'>28%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='15:44'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>15:44</td><td><b>びわこ11R</b></td><td>1 <span class='pct'>57%</span></td><td class='picks'>1-2-5 / 1-2-3 / 1-2-6</td><td class='pct'>34%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='15:47'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>15:47</td><td><b>津11R</b></td><td>1 <span class='pct'>82%</span></td><td class='picks'>1-2-6 / 1-2-4 / 1-2-3</td><td class='pct'>36%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='15:53'><td><span class="badge b-axis">★軸</span></td><td>15:53</td><td><b>江戸川11R</b></td><td>1 <span class='pct'>58%</span></td><td class='picks'>1-5-4 / 1-5-3 / 1-5-2</td><td class='pct'>25%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='15:57'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>15:57</td><td><b>尼崎11R</b></td><td>1 <span class='pct'>74%</span></td><td class='picks'>1-4-2 / 1-4-3 / 1-4-6</td><td class='pct'>43%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:04'><td><span class="badge b-none">ー</span></td><td>16:04</td><td><b>丸亀2R</b></td><td>1 <span class='pct'>42%</span></td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td class='pct'>17%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:06'><td><span class="badge b-none">ー</span></td><td>16:06</td><td><b>蒲郡2R</b></td><td>2 <span class='pct'>43%</span></td><td class='picks'>2-1-3 / 2-1-4 / 2-3-1</td><td class='pct'>22%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:07'><td><span class="badge b-none">ー</span></td><td>16:07</td><td><b>若松2R</b></td><td>6 <span class='pct'>32%</span></td><td class='picks'>6-3-1 / 6-3-5 / 3-6-1</td><td class='pct'>14%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:13'><td><span class="badge b-axis">★軸</span></td><td>16:13</td><td><b>児島11R</b></td><td>1 <span class='pct'>53%</span></td><td class='picks'>1-2-3 / 1-2-5 / 1-3-2</td><td class='pct'>22%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:15'><td><span class="badge b-axis">★軸</span></td><td>16:15</td><td><b>多摩川10R</b></td><td>1 <span class='pct'>58%</span></td><td class='picks'>1-5-4 / 1-5-3 / 1-5-2</td><td class='pct'>25%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:20'><td><span class="badge b-axis">★軸</span></td><td>16:20</td><td><b>びわこ12R</b></td><td>1 <span class='pct'>55%</span></td><td class='picks'>1-3-2 / 1-3-5 / 1-3-4</td><td class='pct'>29%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:25'><td><span class="badge b-none">ー</span></td><td>16:25</td><td><b>江戸川12R</b></td><td>1 <span class='pct'>44%</span></td><td class='picks'>1-4-2 / 1-4-3 / 1-4-5</td><td class='pct'>17%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='16:25'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>16:25</td><td><b>津12R</b></td><td>1 <span class='pct'>77%</span></td><td class='picks'>1-3-2 / 1-2-3 / 1-3-4</td><td class='pct'>47%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:28'><td><span class="badge b-none">ー</span></td><td>16:28</td><td><b>丸亀3R</b></td><td>1 <span class='pct'>42%</span></td><td class='picks'>1-3-4 / 1-4-3 / 1-3-2</td><td class='pct'>25%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='16:35'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>16:35</td><td><b>尼崎12R</b></td><td>1 <span class='pct'>62%</span></td><td class='picks'>1-3-2 / 1-2-3 / 3-1-2</td><td class='pct'>36%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:39'><td><span class="badge b-none">ー</span></td><td>16:39</td><td><b>若松3R</b></td><td>2 <span class='pct'>38%</span></td><td class='picks'>2-1-3 / 2-5-1 / 2-1-6</td><td class='pct'>11%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='16:41'><td><span class="badge b-none">ー</span></td><td>16:41</td><td><b>蒲郡3R</b></td><td>2 <span class='pct'>38%</span></td><td class='picks'>2-3-4 / 2-3-1 / 2-1-4</td><td class='pct'>14%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:47'><td><span class="badge b-axis">★軸</span></td><td>16:47</td><td><b>児島12R</b></td><td>1 <span class='pct'>66%</span></td><td class='picks'>1-3-4 / 1-3-6 / 1-3-2</td><td class='pct'>23%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='16:49'><td><span class="badge b-axis">★軸</span></td><td>16:49</td><td><b>多摩川11R</b></td><td>1 <span class='pct'>62%</span></td><td class='picks'>1-2-4 / 1-2-3 / 1-3-2</td><td class='pct'>24%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='17:00'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>17:00</td><td><b>丸亀4R</b></td><td>1 <span class='pct'>57%</span></td><td class='picks'>1-2-5 / 1-2-3 / 1-3-5</td><td class='pct'>34%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='17:09'><td><span class="badge b-none">ー</span></td><td>17:09</td><td><b>若松4R</b></td><td>3 <span class='pct'>27%</span></td><td class='picks'>3-2-5 / 3-2-6 / 3-2-1</td><td class='pct'>9%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='17:17'><td><span class="badge b-none">ー</span></td><td>17:17</td><td><b>蒲郡4R</b></td><td>1 <span class='pct'>39%</span></td><td class='picks'>1-3-4 / 1-4-5 / 1-4-2</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='17:20'><td><span class="badge b-axis">★軸</span></td><td>17:20</td><td><b>多摩川12R</b></td><td>1 <span class='pct'>55%</span></td><td class='picks'>1-4-2 / 1-4-6 / 1-4-3</td><td class='pct'>27%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='17:25'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>17:25</td><td><b>丸亀5R</b></td><td>1 <span class='pct'>76%</span></td><td class='picks'>1-5-3 / 1-3-5 / 1-5-6</td><td class='pct'>46%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='17:34'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>17:34</td><td><b>若松5R</b></td><td>1 <span class='pct'>66%</span></td><td class='picks'>1-2-4 / 1-2-3 / 1-2-5</td><td class='pct'>36%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='17:42'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>17:42</td><td><b>蒲郡5R</b></td><td>3 <span class='pct'>53%</span></td><td class='picks'>3-4-1 / 3-1-4 / 3-4-2</td><td class='pct'>30%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='17:50'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>17:50</td><td><b>丸亀6R</b></td><td>1 <span class='pct'>70%</span></td><td class='picks'>1-2-3 / 1-2-6 / 1-2-4</td><td class='pct'>35%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='17:59'><td><span class="badge b-none">ー</span></td><td>17:59</td><td><b>若松6R</b></td><td>1 <span class='pct'>26%</span></td><td class='picks'>1-2-4 / 4-2-1 / 4-1-2</td><td class='pct'>14%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:07'><td><span class="badge b-none">ー</span></td><td>18:07</td><td><b>蒲郡6R</b></td><td>2 <span class='pct'>46%</span></td><td class='picks'>2-1-3 / 2-1-5 / 2-5-3</td><td class='pct'>21%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='18:15'><td><span class="badge b-axis">★軸</span></td><td>18:15</td><td><b>丸亀7R</b></td><td>1 <span class='pct'>60%</span></td><td class='picks'>1-5-2 / 1-5-4 / 1-5-6</td><td class='pct'>19%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:24'><td><span class="badge b-none">ー</span></td><td>18:24</td><td><b>若松7R</b></td><td>1 <span class='pct'>39%</span></td><td class='picks'>1-2-5 / 1-2-4 / 1-5-2</td><td class='pct'>11%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='18:32'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>18:32</td><td><b>蒲郡7R</b></td><td>1 <span class='pct'>68%</span></td><td class='picks'>1-3-4 / 1-3-2 / 1-4-3</td><td class='pct'>43%</td></tr>
+<tr class='r-hard' data-mark='hard' data-axis='1' data-dl='18:40'><td><span class="badge b-hard">◎勝負</span> <span class="badge b-axis">★軸</span></td><td>18:40</td><td><b>丸亀8R</b></td><td>1 <span class='pct'>79%</span></td><td class='picks'>1-2-3 / 1-2-4 / 1-4-2</td><td class='pct'>42%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:49'><td><span class="badge b-none">ー</span></td><td>18:49</td><td><b>若松8R</b></td><td>1 <span class='pct'>43%</span></td><td class='picks'>1-2-3 / 1-2-5 / 1-2-6</td><td class='pct'>13%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='18:57'><td><span class="badge b-none">ー</span></td><td>18:57</td><td><b>蒲郡8R</b></td><td>2 <span class='pct'>37%</span></td><td class='picks'>2-1-3 / 2-1-4 / 2-1-5</td><td class='pct'>12%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:06'><td><span class="badge b-none">ー</span></td><td>19:06</td><td><b>丸亀9R</b></td><td>1 <span class='pct'>38%</span></td><td class='picks'>1-3-6 / 1-3-2 / 6-1-3</td><td class='pct'>17%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:15'><td><span class="badge b-none">ー</span></td><td>19:15</td><td><b>若松9R</b></td><td>1 <span class='pct'>37%</span></td><td class='picks'>2-1-5 / 1-2-5 / 2-1-4</td><td class='pct'>22%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:23'><td><span class="badge b-none">ー</span></td><td>19:23</td><td><b>蒲郡9R</b></td><td>2 <span class='pct'>44%</span></td><td class='picks'>2-1-3 / 2-1-4 / 1-2-3</td><td class='pct'>25%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='19:33'><td><span class="badge b-axis">★軸</span></td><td>19:33</td><td><b>丸亀10R</b></td><td>1 <span class='pct'>54%</span></td><td class='picks'>1-2-3 / 1-2-4 / 1-2-6</td><td class='pct'>28%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='19:42'><td><span class="badge b-none">ー</span></td><td>19:42</td><td><b>若松10R</b></td><td>1 <span class='pct'>43%</span></td><td class='picks'>1-3-6 / 1-2-3 / 1-2-6</td><td class='pct'>12%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='19:50'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>19:50</td><td><b>蒲郡10R</b></td><td>1 <span class='pct'>73%</span></td><td class='picks'>1-3-2 / 1-3-4 / 1-2-3</td><td class='pct'>31%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='20:00'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>20:00</td><td><b>丸亀11R</b></td><td>1 <span class='pct'>62%</span></td><td class='picks'>1-2-3 / 1-2-5 / 1-2-4</td><td class='pct'>34%</td></tr>
+<tr class='' data-mark='none' data-axis='1' data-dl='20:09'><td><span class="badge b-axis">★軸</span></td><td>20:09</td><td><b>若松11R</b></td><td>1 <span class='pct'>60%</span></td><td class='picks'>1-2-4 / 1-4-2 / 1-2-6</td><td class='pct'>15%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='20:17'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>20:17</td><td><b>蒲郡11R</b></td><td>1 <span class='pct'>65%</span></td><td class='picks'>1-5-3 / 1-5-4 / 1-5-2</td><td class='pct'>34%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='20:30'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>20:30</td><td><b>丸亀12R</b></td><td>1 <span class='pct'>80%</span></td><td class='picks'>1-2-4 / 1-2-3 / 1-4-2</td><td class='pct'>39%</td></tr>
+<tr class='' data-mark='none' data-axis='0' data-dl='20:38'><td><span class="badge b-none">ー</span></td><td>20:38</td><td><b>若松12R</b></td><td>1 <span class='pct'>42%</span></td><td class='picks'>1-4-2 / 1-2-4 / 1-4-3</td><td class='pct'>16%</td></tr>
+<tr class='r-soft' data-mark='soft' data-axis='1' data-dl='20:45'><td><span class="badge b-soft">○3点</span> <span class="badge b-axis">★軸</span></td><td>20:45</td><td><b>蒲郡12R</b></td><td>1 <span class='pct'>71%</span></td><td class='picks'>1-3-2 / 1-3-6 / 1-3-5</td><td class='pct'>37%</td></tr></table>
 <div class="sec">🏦 おすすめ (PR)</div><div class="adbox"><a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B3XB4+61B8KY+3XCC+BYT9D" rel="nofollow sponsored">💹 新NISAなら松井証券 — 手数料無料で始める</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B3XB4+4W8BUA+1WP2+15QHIA" rel="nofollow sponsored">📈 DMM株 — 1株から投資デビュー</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DYHVCI+1LP8+CBO81" rel="nofollow sponsored">💰 ハピタス — ポイ活で軍資金づくり(高還元)</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DZOQK2+3NOK+60H7L" rel="nofollow sponsored">🪙 ECナビ — アンケートでコツコツ貯める</a></div>
-<div class="note">本サイトの予想は統計モデルによる参考情報であり、的中を保証するものではありません。公営競技の投票は20歳以上・自己責任で。のめり込みに注意してください。<br>更新: 2026-06-11 15:40 (1日2回自動更新) / 予想生成・結果照合・本ページ更新まで全て自動化されています。</div>
-</div><footer>© AI勝負レース研究所</footer></body></html>
+<div class="note">本サイトの予想は統計モデルによる参考情報であり、的中を保証するものではありません。公営競技の投票は20歳以上・自己責任で。のめり込みに注意してください。<br>更新: 2026-06-11 15:53 (1日2回自動更新) / 予想生成・結果照合・本ページ更新まで全て自動化されています。</div>
+</div><footer>© AI勝負レース研究所</footer><script>
+function fil(mode,btn){
+ document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+ document.querySelectorAll('tr[data-mark]').forEach(tr=>{
+  const m=tr.dataset.mark;
+  tr.style.display=(mode==='all'||(mode==='hard'&&m==='hard')||(mode==='bet'&&(m==='hard'||m==='soft'))
+   ||(mode==='axis'&&tr.dataset.axis==='1'))?'':'none';});}
+(function(){const now=new Date();const cur=now.getHours()*60+now.getMinutes();
+ document.querySelectorAll('tr[data-dl]').forEach(tr=>{const[h,m]=tr.dataset.dl.split(':').map(Number);
+  if(h*60+m<cur-2)tr.classList.add('done');});})();
+</script></body></html>
