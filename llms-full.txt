@@ -1,0 +1,23 @@
+# AI勝負レース研究所 — llms-full.txt
+
+> AIによる競輪・競艇・競馬の勝負レース予想。全予想と結果を毎日自動公開する透明性が特徴。
+
+## AI勝負レース研究所 | AI競輪・競艇・競馬予想 (実績全公開)
+URL: https://1280itsuya.github.io/ai-yosou/
+AIによる競輪・競艇・競馬の勝負レース予想。全予想と結果を毎日自動公開する透明性が特徴。
+
+## 🚤 競艇 AI予想 | AI勝負レース研究所
+URL: https://1280itsuya.github.io/ai-yosou/boat.html
+公式出走表×機械学習。展示・コース別成績・モーターまで60項目で算出。全予想と結果を毎日自動公開。
+
+## 🏇 競馬 AI予想 | AI勝負レース研究所
+URL: https://1280itsuya.github.io/ai-yosou/keiba.html
+中央競馬のAI予想(準備中)。全予想と結果を毎日自動公開。
+
+## 🚴 競輪 AI予想 | AI勝負レース研究所
+URL: https://1280itsuya.github.io/ai-yosou/keirin.html
+WINTICKET公式データ×機械学習。ライン・周長適性・直近上がりまで60項目で算出。全予想と結果を毎日自動公開。
+
+## 実績 | AI勝負レース研究所
+URL: https://1280itsuya.github.io/ai-yosou/results.html
+AI競輪・競艇予想の全結果を毎日自動で答え合わせ。的中率・回収率(ROI)を全公開。
