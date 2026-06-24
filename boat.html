@@ -2,20 +2,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>🚤 競艇 AI予想 | AI勝負レース研究所</title><meta name="description" content="公式出走表×機械学習。展示・コース別成績・モーターまで60項目で算出。全予想と結果を毎日自動公開。">
 <link rel="canonical" href="https://1280itsuya.github.io/ai-yosou/boat.html"><meta property="og:type" content="website"><meta property="og:site_name" content="AI勝負レース研究所"><meta property="og:title" content="🚤 競艇 AI予想 | AI勝負レース研究所"><meta property="og:description" content="公式出走表×機械学習。展示・コース別成績・モーターまで60項目で算出。全予想と結果を毎日自動公開。"><meta property="og:url" content="https://1280itsuya.github.io/ai-yosou/boat.html"><meta property="og:image" content="https://1280itsuya.github.io/ai-yosou/icon-512.png"><meta name="twitter:card" content="summary"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "AI勝負レース研究所", "url": "https://1280itsuya.github.io/ai-yosou/", "description": "AIによる競輪・競艇・競馬の勝負レース予想。全予想と結果を毎日自動公開。", "publisher": {"@type": "Organization", "name": "AI勝負レース研究所", "url": "https://1280itsuya.github.io/ai-yosou/", "logo": "https://1280itsuya.github.io/ai-yosou/icon-512.png"}}</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-1E7CLJ7YJH"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-1E7CLJ7YJH');</script>
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0f1830">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#f6f8fc">
 <link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <link rel="alternate" type="application/rss+xml" title="AI勝負レース研究所" href="feed.xml">
 <style>
 *{box-sizing:border-box}
-:root{--bg:#070b14;--panel:rgba(22,30,48,.72);--line:rgba(122,160,255,.14);
---tx:#e8eefc;--mut:#8fa3c8;--gold:#ffc94d;--blue:#5ab8ff;--red:#ff5d7a;--grn:#3ddc84}
+:root{--bg:#f6f8fc;--panel:#ffffff;--line:rgba(20,45,95,.14);
+--tx:#1b2333;--mut:#5a6b85;--gold:#bf8a0a;--blue:#1d7fd6;--red:#e23a5e;--grn:#1a9e54}
 body{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;margin:0;background:var(--bg);color:var(--tx);
-background-image:radial-gradient(900px 420px at 80% -10%,rgba(64,120,255,.16),transparent),
-radial-gradient(700px 380px at 0% 0%,rgba(255,90,140,.10),transparent)}
+background-image:radial-gradient(900px 420px at 80% -10%,rgba(64,120,255,.07),transparent),
+radial-gradient(700px 380px at 0% 0%,rgba(255,90,140,.05),transparent)}
 .wrap{max-width:920px;margin:0 auto;padding:16px}
 header{padding:34px 16px 22px;text-align:center}
 header h1{margin:0;font-size:1.8em;font-weight:900;letter-spacing:.04em;
-background:linear-gradient(90deg,#fff,#9cc4ff 55%,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+background:linear-gradient(90deg,#1b2333,#2b6fd6 55%,#bf8a0a);-webkit-background-clip:text;background-clip:text;color:transparent}
 header p{margin:8px 0 0;color:var(--mut);font-size:.9em}
 nav{display:flex;gap:10px;justify-content:center;margin:18px 0 6px}
 nav a{color:var(--tx);text-decoration:none;padding:9px 20px;border:1px solid var(--line);
@@ -24,9 +24,9 @@ nav a:hover,nav a.on{border-color:var(--gold);color:var(--gold)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
 @media(max-width:620px){.stats{grid-template-columns:1fr}}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 12px;
-text-align:center;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+text-align:center;box-shadow:0 6px 20px rgba(20,40,90,.08)}
 .stat b{display:block;font-size:2.1em;font-weight:900;
-background:linear-gradient(180deg,#ffe9ad,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+background:linear-gradient(180deg,#d99e00,#a9780a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat span{font-size:.78em;color:var(--mut);line-height:1.5}
 .filters{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
 .fbtn,.gbtn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--mut);
@@ -60,8 +60,8 @@ footer{text-align:center;color:#44546f;font-size:.75em;padding:28px 0}
 .legend{font-size:.8em;color:var(--mut);margin:8px 0;line-height:1.7}
 .adbox{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.adbox{grid-template-columns:1fr}}
-.ad{display:block;background:var(--panel);border:1px solid var(--line);color:#cfe0ff;text-align:center;
-padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:.2s;backdrop-filter:blur(8px)}
+.ad{display:block;background:var(--panel);border:1px solid var(--line);color:var(--blue);text-align:center;
+padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:.2s}
 .ad:hover{border-color:var(--blue);transform:translateY(-2px)}
 </style></head><body>
 <header><h1>🚤 競艇 AI予想</h1><p>公式出走表×機械学習。展示・コース別成績・モーターまで60項目で算出</p></header>
@@ -256,7 +256,7 @@ padding:13px;border-radius:12px;text-decoration:none;font-size:.85em;transition:
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B3XB4+4W8BUA+1WP2+15QHIA" rel="nofollow sponsored">📈 DMM株 — 1株から投資デビュー</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DYHVCI+1LP8+CBO81" rel="nofollow sponsored">💰 ハピタス — ポイ活で軍資金づくり(高還元)</a>
 <a class="ad" href="https://px.a8.net/svt/ejp?a8mat=4B5SKA+DZOQK2+3NOK+60H7L" rel="nofollow sponsored">🪙 ECナビ — アンケートでコツコツ貯める</a></div>
-<div class="note">本サイトの予想は統計モデルによる参考情報であり、的中を保証するものではありません。公営競技の投票は20歳以上・自己責任で。のめり込みに注意してください。<br>更新: 2026-06-24 10:39 (1日2回自動更新) / 予想生成・結果照合・ページ更新まで全て自動化。</div>
+<div class="note">本サイトの予想は統計モデルによる参考情報であり、的中を保証するものではありません。公営競技の投票は20歳以上・自己責任で。のめり込みに注意してください。<br>更新: 2026-06-24 21:51 (1日2回自動更新) / 予想生成・結果照合・ページ更新まで全て自動化。</div>
 </div><footer>© AI勝負レース研究所 ／ 姉妹サイト: <a href="https://1280itsuya.github.io/devtools/" style="color:#5b8cff">開発者ツール集 DevToolBox</a>・<a href="https://1280itsuya.github.io/blog/" style="color:#5b8cff">AIマネ研究所ブログ</a></footer><script>
 function fil(mode,btn){
  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
